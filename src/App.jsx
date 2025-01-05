@@ -12,7 +12,6 @@ const KAY_API = "xdjkac150CbFCNeS7Q-go_I-69rjDCCNi2TdpSdj0Mo";
 
 function App() {
   const [query, setQuery] = useState("");
-
   const [photos, setPhotos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -77,12 +76,17 @@ function App() {
   };
 
   const handleClickImgModal = (e) => {
-    setIsModalOpen(true);
     const imgId = e.currentTarget.id;
     const findImg = photos.find((img) => img.id === imgId);
     setSelectedImg(findImg);
+    setIsModalOpen(true);
 
     console.log(imgId);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedImg(null);
   };
 
   const handleLoadMore = () => {
@@ -97,7 +101,11 @@ function App() {
       {isLoading === true && <Loader />}
       <ImageGallery photos={photos} onOpenModal={handleClickImgModal} />
       {photos.length > 0 && <LoadMoreBtn onLoadMore={handleLoadMore} />}
-      {isModalOpen === true && <ImageModal selectedImg={selectedImg} />}
+      <ImageModal
+        selectedImg={selectedImg}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </>
   );
 }
