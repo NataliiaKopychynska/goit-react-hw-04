@@ -1,4 +1,5 @@
 import { useState } from "react";
+import s from "./SearchBar.module.css";
 
 export default function SearchBar({ onSearchValue }) {
   const [value, setValue] = useState("");
@@ -8,17 +9,21 @@ export default function SearchBar({ onSearchValue }) {
   };
   return (
     <>
-      <header>
-        <form onSubmit={handleClickSearch}>
+      <header className={s.header}>
+        <form className={s.form} onSubmit={handleClickSearch}>
           <input
             onChange={(e) => setValue(e.target.value)}
             value={value}
             type="text"
             autoComplete="off"
             autoFocus
-            placeholder="Search images and photos"
+            placeholder="Search images..."
+            className={s.input}
           />
-          <button type="submit">Search</button>
+
+          <button className={s.btnImg} type="submit">
+            Search
+          </button>
         </form>
       </header>
     </>

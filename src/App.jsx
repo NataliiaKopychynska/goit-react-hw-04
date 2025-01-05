@@ -5,6 +5,7 @@ import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import axios from "axios";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Loader from "./components/Loader/Loader";
+
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
 
@@ -35,7 +36,7 @@ function App() {
               client_id: KAY_API,
               query: query,
               page: page,
-              per_page: 10,
+              per_page: 20,
               order_by: "relevant",
               collections: query,
               content_filter: "high",
@@ -76,8 +77,6 @@ function App() {
   };
 
   const handleClickImgModal = (e) => {
-    console.log("modal work");
-
     const imgId = e.currentTarget.id;
     const findImg = photos.find((img) => img.id === imgId);
 

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Modal from "react-modal";
+import s from "./ImageModal.module.css";
 Modal.setAppElement("#root");
 
 export default function ImageModal({ selectedImg, isOpen, onClose }) {
@@ -9,12 +10,18 @@ export default function ImageModal({ selectedImg, isOpen, onClose }) {
         onClose();
       }
     };
+
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [onClose]);
+  const handleOverlayClick = (event) => {
+    if (event.target === event.currentTarget) {
+      onClose();
+    }
+  };
   return (
     <Modal
       isOpen={isOpen}
@@ -24,12 +31,14 @@ export default function ImageModal({ selectedImg, isOpen, onClose }) {
       overlayClassName="modal-overlay"
     >
       {selectedImg && (
-        <div>
-          <img
-            src={selectedImg.urls.regular}
-            alt={selectedImg.alt_description}
-          />
-          <button onClick={onClose}>Close</button>
+        <div onClick={handleOverlayClick} className={s.madalOverlay}>
+          <div className={s.modalContainer}>
+            <img
+              src={selectedImg.urls.regular}
+              alt={selectedImg.alt_description}
+            />
+            <button onClick={onClose}>Close</button>
+          </div>
         </div>
       )}
     </Modal>
