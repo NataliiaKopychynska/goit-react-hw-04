@@ -76,12 +76,18 @@ function App() {
   };
 
   const handleClickImgModal = (e) => {
+    console.log("modal work");
+
     const imgId = e.currentTarget.id;
     const findImg = photos.find((img) => img.id === imgId);
+
+    if (!findImg) {
+      console.error("Image not found");
+      return;
+    }
+
     setSelectedImg(findImg);
     setIsModalOpen(true);
-
-    console.log(imgId);
   };
 
   const handleCloseModal = () => {
