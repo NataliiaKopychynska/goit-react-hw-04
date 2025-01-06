@@ -8,6 +8,7 @@ import Loader from "./components/Loader/Loader";
 
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
+import { toast, ToastContainer } from "react-toastify";
 
 const KAY_API = "xdjkac150CbFCNeS7Q-go_I-69rjDCCNi2TdpSdj0Mo";
 
@@ -21,7 +22,7 @@ function App() {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    if (!query.trim()) {
+    if (!query.trim("")) {
       setPhotos([]);
       return;
     }
@@ -74,6 +75,10 @@ function App() {
     setQuery(newQuery);
     setPhotos([]);
     setPage(1);
+    if (photos.length === 0) {
+      setIsError(true);
+      toast("Please enter new prompt");
+    }
   };
 
   const handleClickImgModal = (e) => {
@@ -103,9 +108,11 @@ function App() {
     <>
       <SearchBar onSearchValue={handleSearchValue} />
       {isError === true && <ErrorMessage />}
+      {/* {photos.length === 0 && <ErrorMessage />} */}
       {isLoading === true && <Loader />}
       <ImageGallery photos={photos} onOpenModal={handleClickImgModal} />
       {photos.length > 0 && <LoadMoreBtn onLoadMore={handleLoadMore} />}
+      <ToastContainer />
       <ImageModal
         selectedImg={selectedImg}
         isOpen={isModalOpen}

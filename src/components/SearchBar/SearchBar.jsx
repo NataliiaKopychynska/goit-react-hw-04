@@ -1,10 +1,16 @@
 import { useState } from "react";
 import s from "./SearchBar.module.css";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function SearchBar({ onSearchValue }) {
   const [value, setValue] = useState("");
   const handleClickSearch = (e) => {
     e.preventDefault();
+    if (!value.trim("")) {
+      toast("Please enter your prompt");
+
+      return;
+    }
     onSearchValue(value);
   };
   return (
@@ -25,6 +31,7 @@ export default function SearchBar({ onSearchValue }) {
             Search
           </button>
         </form>
+        <ToastContainer />
       </header>
     </>
   );
